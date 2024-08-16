@@ -24,3 +24,6 @@ Inicialmente haverá um banco de dados sqlite local, mas pretendo enviar os dado
 
 Para os amantes da organização em finanças será lançado em breve.
 
+
+## License GPL-2.0
+
