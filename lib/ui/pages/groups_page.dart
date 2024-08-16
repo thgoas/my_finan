@@ -1,0 +1,131 @@
+import 'package:flutter/material.dart';
+import 'package:get_it/get_it.dart';
+
+import 'package:go_router/go_router.dart';
+import 'package:my_finan/interactor/entities/group_entity.dart';
+import 'package:my_finan/interactor/models/group_model.dart';
+import 'package:my_finan/interactor/states/group_state.dart';
+import 'package:my_finan/shared/models/show_dialog.dart';
+import 'package:my_finan/shared/models/type_operation_model.dart';
+
+class GroupsPage extends StatefulWidget {
+  const GroupsPage({super.key});
+
+  @override
+  State<GroupsPage> createState() => _GroupsPageState();
+}
+
+class _GroupsPageState extends State<GroupsPage> {
+  late final GroupModel _groupModel;
+  final _controller = GetIt.instance.get<GroupModel>();
+  @override
+  void initState() {
+    super.initState();
+    _groupModel = GetIt.instance.get<GroupModel>();
+    _groupModel.getGroups();
+  }
+
+  Future<bool> _removeGroup(GroupEntity group) async {
+    final result = await ShowDialog.confirmationAlertDialog('Excluir Grupo',
+        'Deseja realmente excluir o grupo ${group.description}?', context);
+    result ? await _controller.removeGroup(group.id) : null;
+    return result;
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final typeOperationModel = TypeOperationModel();
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('Grupos'),
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          context.go('/groups/form/Novo', extra: null);
+        },
+        child: const Icon(Icons.add),
+      ),
+      body: Column(children: [
+        Expanded(
+          child: ValueListenableBuilder(
+            valueListenable: _groupModel.state,
+            builder: (context, state, _) {
+              switch (state.runtimeType) {
+                case const (GroupStartState):
+                  return const Center(
+                    child: Center(
+                      child: Text('Sem dados'),
+                    ),
+                  );
+                case const (GroupLoadingState):
+                  return const Center(
+                    child: CircularProgressIndicator(),
+                  );
+                case const (GroupSuccessfulState):
+                  final successFulState = state as GroupSuccessfulState;
+                  return Center(
+                    child: ListView.builder(
+                      itemCount: successFulState.groups.length,
+                      itemBuilder: (context, index) {
+                        final resultTypeOperation =
+                            typeOperationModel.typeOperationToMap(
+                                successFulState.groups[index].typeOperation);
+                        final group = successFulState.groups[index];
+                        return Card(
+                          child: Dismissible(
+                            background: Container(
+                              color: Colors.red,
+                              alignment: Alignment.centerRight,
+                              child: const Icon(
+                                Icons.delete,
+                                color: Colors.white,
+                              ),
+                            ),
+                            key: ValueKey(group.id),
+                            direction: DismissDirection.endToStart,
+                            confirmDismiss: (direction) async {
+                              return await _removeGroup(group);
+                            },
+                            child: ListTile(
+                              leading: group.iconCode != null
+                                  ? Icon(
+                                      IconData(group.iconCode!,
+                                          fontFamily: 'MaterialIcons'),
+                                      size: 40,
+                                    )
+                                  : const Icon(Icons.error, size: 40),
+                              title: Text(group.description),
+                              subtitle: Row(
+                                children: [
+                                  Icon(
+                                    resultTypeOperation['icon'],
+                                    color: resultTypeOperation['color'],
+                                  ),
+                                  Text(resultTypeOperation['name']),
+                                ],
+                              ),
+                              onTap: () {
+                                context.go('/groups/form/Edite',
+                                    extra: successFulState.groups[index]);
+                              },
+                            ),
+                          ),
+                        );
+                      },
+                    ),
+                  );
+                case const (GroupErrorState):
+                  final errorState = state as GroupErrorState;
+                  return Center(
+                    child: Text(errorState.failureGroup.message),
+                  );
+                default:
+                  return Container();
+              }
+            },
+          ),
+        ),
+      ]),
+    );
+  }
+}
