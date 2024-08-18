@@ -99,16 +99,16 @@ class _FormGroupPageState extends State<FormGroupPage> {
     return Scaffold(
       appBar: AppBar(
         title: Text('${widget.groupTitle} grupo'),
-        leading: IconButton(
-          icon: const Icon(Icons.arrow_back),
-          onPressed: () {
-            if (Navigator.canPop(context)) {
-              context.pop();
-            } else {
-              context.go('/');
-            }
-          },
-        ),
+        // leading: IconButton(
+        //   icon: const Icon(Icons.arrow_back),
+        //   onPressed: () {
+        //     if (Navigator.canPop(context)) {
+        //       context.pop();
+        //     } else {
+        //       context.go('/');
+        //     }
+        //   },
+        // ),
       ),
       body: SingleChildScrollView(
         child: Padding(
