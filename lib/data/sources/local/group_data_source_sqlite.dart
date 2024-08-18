@@ -63,7 +63,6 @@ class GroupDataSourceSqlite implements GroupDataSource {
         iconCode: groupEntity.iconCode,
         createdAt: groupEntity.createdAt,
         updatedAt: groupEntity.updatedAt);
-    print('data source ${groupDto}');
     await db.insert('groups', groupDto.toMap());
 
     return groupDto;
