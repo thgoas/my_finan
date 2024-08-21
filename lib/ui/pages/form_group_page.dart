@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:go_router/go_router.dart';
+import 'package:my_finan/interactor/controllers/group_controller.dart';
 import 'package:my_finan/interactor/entities/group_entity.dart';
 import 'package:my_finan/interactor/entities/type_method.dart';
 import 'package:my_finan/interactor/entities/type_operation.dart';
-import 'package:my_finan/interactor/models/group_model.dart';
 import 'package:my_finan/shared/components/description_widget.dart';
 import 'package:my_finan/shared/components/icon_list_widget.dart';
 import 'package:my_finan/shared/components/show_button_sheet_widget.dart';
@@ -37,7 +37,7 @@ class FormGroupPage extends StatefulWidget {
 class _FormGroupPageState extends State<FormGroupPage> {
   final TypeOperationModel _typeOperationModel = TypeOperationModel();
   final TypeMethodFinance _typeMethodFinance = TypeMethodFinance();
-  final _controller = GetIt.instance.get<GroupModel>();
+  final _controller = GetIt.instance.get<GroupController>();
   _getIconCode(int? iconCode) {
     if (iconCode != null) {
       setState(() {
@@ -78,8 +78,9 @@ class _FormGroupPageState extends State<FormGroupPage> {
             typeOperation: widget._typeOperation!,
             typeMethod: widget._typeMethod!,
             iconCode: widget._iconCode!);
-        _controller.saveGroup(input);
-        context.go('/');
+        _controller
+            .saveGroup(input)
+            .then((value) => GoRouter.of(context).pop(true));
       } else {
         final input = InputUpdateGroup(
             id: widget.groupEntity!.id,
@@ -88,8 +89,9 @@ class _FormGroupPageState extends State<FormGroupPage> {
             typeOperation: widget._typeOperation!,
             typeMethod: widget._typeMethod!,
             createdAt: widget.groupEntity!.createdAt!);
-        _controller.updateGroup(input);
-        context.go('/');
+        _controller
+            .updateGroup(input)
+            .then((value) => GoRouter.of(context).pop(true));
       }
     }
   }
@@ -99,16 +101,6 @@ class _FormGroupPageState extends State<FormGroupPage> {
     return Scaffold(
       appBar: AppBar(
         title: Text('${widget.groupTitle} grupo'),
-        // leading: IconButton(
-        //   icon: const Icon(Icons.arrow_back),
-        //   onPressed: () {
-        //     if (Navigator.canPop(context)) {
-        //       context.pop();
-        //     } else {
-        //       context.go('/');
-        //     }
-        //   },
-        // ),
       ),
       body: SingleChildScrollView(
         child: Padding(

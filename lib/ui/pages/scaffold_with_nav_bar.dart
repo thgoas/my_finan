@@ -20,8 +20,8 @@ class ScaffoldWithNavBar extends StatelessWidget {
             label: 'Home',
           ),
           NavigationDestination(
-            icon: Icon(Icons.groups),
-            label: 'Grupos',
+            icon: Icon(Icons.more),
+            label: 'Mais',
           ),
         ],
       ),

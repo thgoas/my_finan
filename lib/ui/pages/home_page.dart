@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
-import 'package:my_finan/ui/pages/groups_page.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
