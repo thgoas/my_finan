@@ -3,11 +3,10 @@ import 'package:my_finan/data/dtos/group_dto.dart';
 import 'package:my_finan/data/sources/local/group_data_source_sqlite.dart';
 import 'package:my_finan/interactor/entities/type_method.dart';
 import 'package:my_finan/interactor/entities/type_operation.dart';
-import 'package:sqflite/sqflite.dart';
+
 import 'package:sqflite_common_ffi/sqflite_ffi.dart';
 
 void main() {
-  late Database db;
   late GroupDataSourceSqlite groupDataSource;
   late List<GroupDto> resultGroups;
   setUpAll(() async {
