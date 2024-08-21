@@ -4,11 +4,11 @@ import 'package:my_finan/interactor/errors/failure_account.dart';
 import 'package:my_finan/interactor/repositories/account_repository.dart';
 import 'package:my_finan/interactor/states/account_state.dart';
 
-class AccountModel {
+class AccountController {
   final AccountRepository repository;
   var state = ValueNotifier<AccountState>(AccountStartState());
 
-  AccountModel(this.repository);
+  AccountController(this.repository);
 
   getAccounts() async {
     try {
@@ -50,8 +50,8 @@ class AccountModel {
     final newAccount = AccountEntity.newAccount(
         description: account.description, iconCode: account.iconCode);
     try {
-      final result = await repository.save(newAccount);
-      state.value = result;
+      await repository.save(newAccount);
+      await getAccounts();
     } catch (e) {
       state.value = AccountErrorState(GenericError(e.toString()));
     }
@@ -66,8 +66,8 @@ class AccountModel {
     );
 
     try {
-      final result = await repository.update(updateAccount);
-      state.value = result;
+      await repository.update(updateAccount);
+      await getAccounts();
     } catch (e) {
       state.value = AccountErrorState(GenericError(e.toString()));
     }
@@ -79,8 +79,8 @@ class AccountModel {
       return;
     }
     try {
-      final result = await repository.remove(id);
-      state.value = result;
+      await repository.remove(id);
+      await getAccounts();
     } catch (e) {
       state.value = AccountErrorState(GenericError(e.toString()));
     }

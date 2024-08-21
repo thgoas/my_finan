@@ -6,11 +6,11 @@ import 'package:my_finan/interactor/errors/failure_group.dart';
 import 'package:my_finan/interactor/repositories/group_respository.dart';
 import 'package:my_finan/interactor/states/group_state.dart';
 
-class GroupModel {
+class GroupController {
   var state = ValueNotifier<GroupState>(GroupStartState());
   final GroupRepository _repository;
 
-  GroupModel(this._repository);
+  GroupController(this._repository);
 
   getGroupById(String id) async {
     state.value = GroupLoadingState();
@@ -54,8 +54,8 @@ class GroupModel {
   removeGroup(String id) async {
     state.value = GroupLoadingState();
     try {
-      final result = await _repository.remove(id);
-      state.value = result;
+      await _repository.remove(id);
+      await getGroups();
     } catch (e) {
       state.value = GroupErrorState(GenericError(e.toString()));
     }
@@ -70,9 +70,8 @@ class GroupModel {
         iconCode: input.iconCode);
 
     try {
-      final result = await _repository.save(group);
-
-      state.value = result;
+      await _repository.save(group);
+      await getGroups();
     } catch (e) {
       state.value = GroupErrorState(GenericError(e.toString()));
     }
@@ -89,8 +88,8 @@ class GroupModel {
         createdAt: input.createdAt);
 
     try {
-      final result = await _repository.update(group);
-      state.value = result;
+      await _repository.update(group);
+      await getGroups();
     } catch (e) {
       state.value = GroupErrorState(GenericError(e.toString()));
     }
