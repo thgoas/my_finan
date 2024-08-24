@@ -63,7 +63,7 @@ main() {
     controller = GroupController(repository);
   });
 
-  group('GroupModel', () {
+  group('Group controller', () {
     group('getGroupById', () {
       test('should return GroupSuccessfulState with id 1', () async {
         when(() => repository.findById(any()))
@@ -153,6 +153,8 @@ main() {
     group('remove', () {
       test('should return GroupSuccessfulState', () async {
         when(() => repository.remove(any()))
+            .thenAnswer((_) async => GroupSuccessfulState(resultGroup));
+        when(() => repository.findAll())
             .thenAnswer((_) async => GroupSuccessfulState(resultGroup));
         await controller.removeGroup('1');
         final state = controller.state.value;
