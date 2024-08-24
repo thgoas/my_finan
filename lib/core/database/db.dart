@@ -1,8 +1,8 @@
 import 'package:my_finan/core/database/seeds/accounts.dart';
+import 'package:my_finan/core/database/seeds/banks.dart';
 import 'package:my_finan/core/database/seeds/groups.dart';
 import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
-import 'package:uuid/uuid.dart';
 
 class Db {
   Db._();
@@ -30,6 +30,7 @@ class Db {
   _onCreate(Database db, int version) async {
     await db.execute(_groupsTable);
     await db.execute(_accountsTable);
+    await db.execute(_banksTable);
     final groups = groupsValues();
     for (var group in groups) {
       await db.insert('groups', group,
@@ -39,6 +40,11 @@ class Db {
 
     for (var account in accounts) {
       await db.insert('accounts', account,
+          conflictAlgorithm: ConflictAlgorithm.replace);
+    }
+
+    for (var bank in banksValues()) {
+      await db.insert('banks', bank,
           conflictAlgorithm: ConflictAlgorithm.replace);
     }
   }
@@ -60,6 +66,16 @@ class Db {
     id TEXT PRIMARY KEY,
     description TEXT,
     iconCode INT,
+    createdAt INT,
+    updatedAt INT
+  )
+''';
+
+  String get _banksTable => '''
+  CREATE TABLE banks (
+    id TEXT PRIMARY KEY,
+    description TEXT,
+    path TEXT,
     createdAt INT,
     updatedAt INT
   )
