@@ -2,7 +2,6 @@ import 'package:my_finan/core/database/db.dart';
 import 'package:my_finan/data/dtos/account_dto.dart';
 import 'package:my_finan/data/sources/account_data_source.dart';
 import 'package:my_finan/interactor/entities/account_entity.dart';
-import 'package:my_finan/interactor/entities/group_entity.dart';
 import 'package:sqflite/sqflite.dart';
 
 class AccountDataSourceSqlite implements AccountDataSource {

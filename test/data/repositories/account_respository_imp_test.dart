@@ -142,7 +142,7 @@ void main() {
               isA<DataSourceException>());
         });
       });
-      group('remove group repository', () {
+      group('remove account repository', () {
         test('should return removed account', () async {
           when(() => accountDataSource.findById(resultAccount[0].id))
               .thenAnswer((_) async => resultAccount[0]);

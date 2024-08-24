@@ -45,8 +45,8 @@ main() {
     repository = AccountRepositoryMock();
     controller = AccountController(repository);
   });
-  group('ModelAccounts', () {
-    test('should return model accounts', () async {
+  group('Accounts controller', () {
+    test('should return accounts', () async {
       when(() => repository.findAll())
           .thenAnswer((_) async => AccountSuccessfulState(accounts));
       await controller.getAccounts();
@@ -55,7 +55,7 @@ main() {
       expect((state as AccountSuccessfulState).accounts, accounts);
     });
 
-    test('should return model account by id', () async {
+    test('should return account by id', () async {
       when(() => repository.findById('1'))
           .thenAnswer((_) async => AccountSuccessfulState([accounts[0]]));
       await controller.getAccountById('1');
@@ -81,7 +81,7 @@ main() {
       expect((state as AccountErrorState).failure, isA<GenericError>());
     });
 
-    test('should return model account by description', () async {
+    test('should return account by description', () async {
       when(() => repository.findByDescription('description'))
           .thenAnswer((_) async => AccountSuccessfulState([accounts[0]]));
       await controller.getAccountByDescription('description');
