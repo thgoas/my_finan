@@ -1,10 +1,11 @@
 class BankIcons {
   final String name;
   final String path;
+
   BankIcons({required this.name, required this.path});
 }
 
-final listBanks = [
+final List<BankIcons> listBanks = [
   BankIcons(name: 'ABC Brasil', path: 'images/banks/abc.svg'),
   BankIcons(name: 'Ailos', path: 'images/banks/ailos.svg'),
   BankIcons(name: 'Asaas IP S.A', path: 'images/banks/asaas_ip_s.a.svg'),
