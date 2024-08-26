@@ -6,63 +6,63 @@ List<Map<String, Object?>> accountsValues() {
     {
       'id': const Uuid().v1(),
       'description': 'Conta Corrente',
-      'iconCode': 58068,
+      'iconCode': 57408,
       'createdAt': createdAt,
       'updatedAt': null
     },
     {
       'id': const Uuid().v1(),
       'description': 'Conta Poupança',
-      'iconCode': 58064,
+      'iconCode': 57408,
       'createdAt': createdAt,
       'updatedAt': null
     },
     {
       'id': const Uuid().v1(),
       'description': 'Cartão de Credito',
-      'iconCode': 58060,
+      'iconCode': 57759,
       'createdAt': createdAt,
       'updatedAt': null
     },
     {
       'id': const Uuid().v1(),
       'description': 'Cartão de Debito',
-      'iconCode': 58062,
+      'iconCode': 57759,
       'createdAt': createdAt,
       'updatedAt': null
     },
     {
       'id': const Uuid().v1(),
       'description': 'Pix',
-      'iconCode': 58060,
+      'iconCode': 984398,
       'createdAt': createdAt,
       'updatedAt': null
     },
     {
       'id': const Uuid().v1(),
       'description': 'Carteira',
-      'iconCode': 58060,
+      'iconCode': 57409,
       'createdAt': createdAt,
       'updatedAt': null
     },
     {
       'id': const Uuid().v1(),
       'description': 'Boleto',
-      'iconCode': 58060,
+      'iconCode': 58671,
       'createdAt': createdAt,
       'updatedAt': null
     },
     {
       'id': const Uuid().v1(),
       'description': 'TED',
-      'iconCode': 58060,
+      'iconCode': 984284,
       'createdAt': createdAt,
       'updatedAt': null
     },
     {
       'id': const Uuid().v1(),
       'description': 'DOC',
-      'iconCode': 58060,
+      'iconCode': 984284,
       'createdAt': createdAt,
       'updatedAt': null
     },
