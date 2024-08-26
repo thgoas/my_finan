@@ -11,6 +11,7 @@ class BankController {
   BankController(this.repository);
 
   getBanks() async {
+    state.value = BankLoadingState();
     try {
       final result = await repository.findAll();
       state.value = result;
@@ -20,6 +21,7 @@ class BankController {
   }
 
   getBankById(String id) async {
+    state.value = BankLoadingState();
     if (id.isEmpty) {
       state.value = BankErrorState(InvalidIdError('Invalid id'));
       return;
@@ -34,6 +36,7 @@ class BankController {
   }
 
   getBankByDescription(String description) async {
+    state.value = BankLoadingState();
     if (description.isEmpty) {
       state.value = BankErrorState(InvalidIdError('Invalid description'));
       return;
@@ -47,6 +50,7 @@ class BankController {
   }
 
   saveBank(InputNewBank bank) async {
+    state.value = BankLoadingState();
     final newBank =
         BankEntity.newBank(description: bank.description, path: bank.path);
     try {
@@ -58,6 +62,7 @@ class BankController {
   }
 
   updateBank(InputUpdateBank bank) async {
+    state.value = BankLoadingState();
     final updateBank = BankEntity.updateBank(
       id: bank.id,
       description: bank.description,
@@ -74,6 +79,7 @@ class BankController {
   }
 
   removeBank(String id) async {
+    state.value = BankLoadingState();
     if (id.isEmpty) {
       state.value = BankErrorState(InvalidIdError('Invalid id'));
       return;

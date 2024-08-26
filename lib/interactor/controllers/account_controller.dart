@@ -11,6 +11,7 @@ class AccountController {
   AccountController(this.repository);
 
   getAccounts() async {
+    state.value = AccountLoadingState();
     try {
       final result = await repository.findAll();
       state.value = result;
@@ -20,6 +21,7 @@ class AccountController {
   }
 
   getAccountById(String id) async {
+    state.value = AccountLoadingState();
     if (id.isEmpty) {
       state.value = AccountErrorState(InvalidIdError('Invalid id'));
       return;
@@ -34,6 +36,7 @@ class AccountController {
   }
 
   getAccountByDescription(String description) async {
+    state.value = AccountLoadingState();
     if (description.isEmpty) {
       state.value = AccountErrorState(InvalidIdError('Invalid description'));
       return;
@@ -47,6 +50,7 @@ class AccountController {
   }
 
   saveAccount(InputNewAccount account) async {
+    state.value = AccountLoadingState();
     final newAccount = AccountEntity.newAccount(
         description: account.description, iconCode: account.iconCode);
     try {
@@ -58,6 +62,7 @@ class AccountController {
   }
 
   updateAccount(InputUpdateAccount account) async {
+    state.value = AccountLoadingState();
     final updateAccount = AccountEntity.updateAccount(
       id: account.id,
       description: account.description,
@@ -74,6 +79,7 @@ class AccountController {
   }
 
   removeAccount(String id) async {
+    state.value = AccountLoadingState();
     if (id.isEmpty) {
       state.value = AccountErrorState(InvalidIdError('Invalid id'));
       return;
