@@ -3,6 +3,7 @@ import 'package:go_router/go_router.dart';
 import 'package:my_finan/interactor/entities/account_entity.dart';
 import 'package:my_finan/interactor/entities/group_entity.dart';
 import 'package:my_finan/ui/pages/accounts_page.dart';
+import 'package:my_finan/ui/pages/banks_page.dart';
 import 'package:my_finan/ui/pages/form_account_page.dart';
 import 'package:my_finan/ui/pages/form_group_page.dart';
 import 'package:my_finan/ui/pages/groups_page.dart';
@@ -82,6 +83,12 @@ class MainRouter {
                         },
                       ),
                     ],
+                  ),
+                  GoRoute(
+                    path: 'banks',
+                    builder: (context, state) {
+                      return const BanksPage();
+                    },
                   ),
                 ],
               ),
